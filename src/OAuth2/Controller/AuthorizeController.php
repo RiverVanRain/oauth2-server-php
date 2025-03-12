@@ -308,8 +308,10 @@ class AuthorizeController implements AuthorizeControllerInterface
             // restrict scope by client specific scope if applicable,
             // otherwise verify the scope exists
             $clientScope = $this->clientStorage->getClientScope($client_id);
-            if ((empty($clientScope) && !$this->scopeUtil->scopeExists($requestedScope))
-                || (!empty($clientScope) && !$this->scopeUtil->checkScope($requestedScope, $clientScope))) {
+            if (
+                (empty($clientScope) && !$this->scopeUtil->scopeExists($requestedScope))
+                || (!empty($clientScope) && !$this->scopeUtil->checkScope($requestedScope, $clientScope))
+            ) {
                 $response->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'invalid_scope', 'An unsupported scope was requested', null);
 
                 return false;

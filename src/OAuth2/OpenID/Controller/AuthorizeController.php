@@ -115,10 +115,10 @@ class AuthorizeController extends BaseAuthorizeController implements AuthorizeCo
             }
 
             if (preg_match('/^[A-Za-z0-9-._~]{43,128}$/', $code_challenge) !== 1) {
-            $response->setError(400, 'invalid_code_challenge', 'The PKCE code challenge supplied is invalid');
+                $response->setError(400, 'invalid_code_challenge', 'The PKCE code challenge supplied is invalid');
 
-            return false;
-          }
+                return false;
+            }
 
             if (!in_array($code_challenge_method, array('plain', 'S256'), true)) {
                 $response->setError(400, 'missing_code_challenge_method', 'This application requires you specify a PKCE code challenge method');

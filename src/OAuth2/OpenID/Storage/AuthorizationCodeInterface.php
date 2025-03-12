@@ -3,6 +3,7 @@
 namespace OAuth2\OpenID\Storage;
 
 use OAuth2\Storage\AuthorizationCodeInterface as BaseAuthorizationCodeInterface;
+
 /**
  * Implement this interface to specify where the OAuth2 Server
  * should get/save authorization codes for the "Authorization Code"
@@ -24,8 +25,8 @@ interface AuthorizationCodeInterface extends BaseAuthorizationCodeInterface
      * Required for OAuth2::GRANT_TYPE_AUTH_CODE.
      *
      * @param string $code         - authorization code to be stored.
-     * @param mixed $client_id     - client identifier to be stored.
-     * @param mixed $user_id       - user identifier to be stored.
+     * @param string $client_id     - client identifier to be stored.
+     * @param int $user_id       - user identifier to be stored.
      * @param string $redirect_uri - redirect URI(s) to be stored in a space-separated string.
      * @param int    $expires      - expiration to be stored as a Unix timestamp.
      * @param string $scope        - OPTIONAL scopes to be stored in space-separated string.
@@ -33,5 +34,5 @@ interface AuthorizationCodeInterface extends BaseAuthorizationCodeInterface
      *
      * @ingroup oauth2_section_4
      */
-    public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = null, $id_token = null, $code_challenge = null, $code_challenge_method = null);
+    public function setAuthorizationCode(string $code, string $client_id, int $user_id = 0, string $redirect_uri, int $expires = 0, string $scope = null, string $id_token = null, string $code_challenge = null, string $code_challenge_method = null);
 }

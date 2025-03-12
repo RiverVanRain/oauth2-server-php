@@ -10,7 +10,6 @@ namespace OAuth2\Storage;
  */
 interface ClientCredentialsInterface extends ClientInterface
 {
-
     /**
      * Make sure that the client credentials is valid.
      *
@@ -27,7 +26,7 @@ interface ClientCredentialsInterface extends ClientInterface
      *
      * @ingroup oauth2_section_3
      */
-    public function checkClientCredentials($client_id, $client_secret = null);
+    public function checkClientCredentials(string $client_id, string $client_secret = null);
 
     /**
      * Determine if the client is a "public" client, and therefore
@@ -45,5 +44,5 @@ interface ClientCredentialsInterface extends ClientInterface
      *
      * @ingroup oauth2_section_2
      */
-    public function isPublicClient($client_id);
+    public function isPublicClient(string $client_id);
 }

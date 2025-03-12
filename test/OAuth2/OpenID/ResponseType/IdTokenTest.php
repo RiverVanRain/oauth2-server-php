@@ -92,8 +92,7 @@ class IdTokenTest extends TestCase
         // test with an array of user info
         $userInfo = array(
             'user_id' => 'testuser1234',
-            'auth_time' => date('Y-m-d H:i:s', strtotime('20 minutes ago')
-        ));
+            'auth_time' => date('Y-m-d H:i:s', strtotime('20 minutes ago')));
 
         $server->handleAuthorizeRequest($request, $response = new Response(), true, $userInfo);
 

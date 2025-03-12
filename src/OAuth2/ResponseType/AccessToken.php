@@ -199,13 +199,13 @@ class AccessToken implements AccessTokenInterface
         /** @TODO remove in v2 */
         if (!method_exists($this->tokenStorage, 'unsetAccessToken')) {
             throw new RuntimeException(
-                sprintf('Token storage %s must implement unsetAccessToken method', get_class($this->tokenStorage)
-            ));
+                sprintf('Token storage %s must implement unsetAccessToken method', get_class($this->tokenStorage))
+            );
         }
 
         $revoked = $this->tokenStorage->unsetAccessToken($token);
 
-        // if a typehint is supplied and fails, try other storages 
+        // if a typehint is supplied and fails, try other storages
         // @see https://tools.ietf.org/html/rfc7009#section-2.1
         if (!$revoked && $tokenTypeHint != 'refresh_token') {
             if ($this->refreshStorage) {

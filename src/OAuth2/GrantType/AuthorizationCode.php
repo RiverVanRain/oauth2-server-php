@@ -110,12 +110,12 @@ class AuthorizationCode implements GrantTypeInterface
                 default:
                     $response->setError(400, 'code_challenge_method_invalid', "Unknown PKCE code challenge method.");
 
-                return FALSE;
+                    return false;
             }
             if ($code_verifier_hashed !== $authCode['code_challenge']) {
                 $response->setError(400, 'code_verifier_mismatch', "The PKCE code verifier parameter does not match the code challenge.");
 
-                return FALSE;
+                return false;
             }
         }
 

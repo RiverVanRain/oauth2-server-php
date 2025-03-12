@@ -36,7 +36,7 @@ class FirebaseJwt implements EncryptionInterface
                         $key = new Key($key, $header->alg);
                     }
                 }
-            } elseif(is_array($allowedAlgorithms)) {
+            } elseif (is_array($allowedAlgorithms)) {
                 $key = new Key($key, $allowedAlgorithms[0]);
             } else {
                 $key = new Key($key, $allowedAlgorithms);

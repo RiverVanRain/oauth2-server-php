@@ -45,7 +45,7 @@ class AccessTokenTest extends TestCase
         ));
 
         $this->assertEquals(array('mytoken'), $tokenStorage->getRefreshToken('revoke'));
-        $accessToken = new AccessToken(new Memory, $tokenStorage);
+        $accessToken = new AccessToken(new Memory(), $tokenStorage);
         $accessToken->revokeToken('revoke', 'refresh_token');
         $this->assertFalse($tokenStorage->getRefreshToken('revoke'));
     }
@@ -59,7 +59,7 @@ class AccessTokenTest extends TestCase
         ));
 
         $this->assertEquals(array('mytoken'), $tokenStorage->getRefreshToken('revoke'));
-        $accessToken = new AccessToken(new Memory, $tokenStorage);
+        $accessToken = new AccessToken(new Memory(), $tokenStorage);
         $accessToken->revokeToken('revoke');
         $this->assertFalse($tokenStorage->getRefreshToken('revoke'));
     }
@@ -101,7 +101,7 @@ class AccessTokenTest extends TestCase
         ));
 
         $this->assertEquals(array('mytoken'), $tokenStorage->getRefreshToken('revoke'));
-        $accessToken = new AccessToken(new Memory, $tokenStorage);
+        $accessToken = new AccessToken(new Memory(), $tokenStorage);
         $accessToken->revokeToken('revoke', 'foo');
         $this->assertFalse($tokenStorage->getRefreshToken('revoke'));
     }

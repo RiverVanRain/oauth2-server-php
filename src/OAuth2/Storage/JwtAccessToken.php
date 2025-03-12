@@ -26,7 +26,7 @@ class JwtAccessToken implements JwtAccessTokenInterface
         $this->publicKeyStorage = $publicKeyStorage;
         $this->tokenStorage = $tokenStorage;
         if (is_null($encryptionUtil)) {
-            $encryptionUtil = new Jwt;
+            $encryptionUtil = new Jwt();
         }
         $this->encryptionUtil = $encryptionUtil;
     }

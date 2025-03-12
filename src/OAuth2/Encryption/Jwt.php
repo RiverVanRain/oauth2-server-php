@@ -94,9 +94,9 @@ class Jwt implements EncryptionInterface
     {
         // use constants when possible, for HipHop support
         switch ($algo) {
-            case'HS256':
-            case'HS384':
-            case'HS512':
+            case 'HS256':
+            case 'HS384':
+            case 'HS512':
                 return $this->hash_equals(
                     $this->sign($input, $key, $algo),
                     $signature
@@ -172,9 +172,11 @@ class Jwt implements EncryptionInterface
     public function urlSafeB64Encode($data)
     {
         $b64 = base64_encode($data);
-        $b64 = str_replace(array('+', '/', "\r", "\n", '='),
-                array('-', '_'),
-                $b64);
+        $b64 = str_replace(
+            array('+', '/', "\r", "\n", '='),
+            array('-', '_'),
+            $b64
+        );
 
         return $b64;
     }
@@ -185,9 +187,11 @@ class Jwt implements EncryptionInterface
      */
     public function urlSafeB64Decode($b64)
     {
-        $b64 = str_replace(array('-', '_'),
-                array('+', '/'),
-                $b64);
+        $b64 = str_replace(
+            array('-', '_'),
+            array('+', '/'),
+            $b64
+        );
 
         return base64_decode($b64);
     }

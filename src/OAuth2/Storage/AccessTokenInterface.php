@@ -30,7 +30,7 @@ interface AccessTokenInterface
      *
      * @ingroup oauth2_section_7
      */
-    public function getAccessToken($oauth_token);
+    public function getAccessToken(string $oauth_token);
 
     /**
      * Store the supplied access token values to storage.
@@ -45,7 +45,7 @@ interface AccessTokenInterface
      *
      * @ingroup oauth2_section_4
      */
-    public function setAccessToken($oauth_token, $client_id, $user_id, $expires, $scope = null);
+    public function setAccessToken(string $oauth_token, string $client_id, int $user_id = 0, int $expires = 0, string $scope = null);
 
     /**
      * Expire an access token.

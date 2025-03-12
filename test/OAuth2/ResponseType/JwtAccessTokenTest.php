@@ -21,7 +21,7 @@ class JwtAccessTokenTest extends TestCase
         $jwtResponseType = $server->getResponseType('token');
 
         $accessToken = $jwtResponseType->createAccessToken('Test Client ID', 123, 'test', false);
-        $jwt = new Jwt;
+        $jwt = new Jwt();
         $decodedAccessToken = $jwt->decode($accessToken['access_token'], null, false);
 
         $this->assertArrayHasKey('id', $decodedAccessToken);
@@ -43,7 +43,7 @@ class JwtAccessTokenTest extends TestCase
 
     public function testExtraPayloadCallback()
     {
-        $jwtconfig = array('jwt_extra_payload_callable' => function() {
+        $jwtconfig = array('jwt_extra_payload_callable' => function () {
             return array('custom_param' => 'custom_value');
         });
 
@@ -51,7 +51,7 @@ class JwtAccessTokenTest extends TestCase
         $jwtResponseType = $server->getResponseType('token');
 
         $accessToken = $jwtResponseType->createAccessToken('Test Client ID', 123, 'test', false);
-        $jwt = new Jwt;
+        $jwt = new Jwt();
         $decodedAccessToken = $jwt->decode($accessToken['access_token'], null, false);
 
         $this->assertArrayHasKey('custom_param', $decodedAccessToken);

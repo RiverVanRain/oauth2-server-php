@@ -87,7 +87,8 @@ class ResourceController implements ResourceControllerInterface
         if ($scope && (!isset($token["scope"]) || !$token["scope"] || !$this->scopeUtil->checkScope($scope, $token["scope"]))) {
             $response->setError(403, 'insufficient_scope', 'The request requires higher privileges than provided by the access token');
             $response->addHttpHeaders(array(
-                'WWW-Authenticate' => sprintf('%s realm="%s", scope="%s", error="%s", error_description="%s"',
+                'WWW-Authenticate' => sprintf(
+                    '%s realm="%s", scope="%s", error="%s", error_description="%s"',
                     $this->tokenType->getTokenType(),
                     $this->config['www_realm'],
                     $scope,

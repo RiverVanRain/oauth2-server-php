@@ -18,7 +18,7 @@ class DynamoDBTest extends BaseTest
         $data = array(
             'Items' => array(),
             'Count' => 0,
-            'ScannedCount'=> 0
+            'ScannedCount' => 0
         );
 
         $return->expects($this->once())

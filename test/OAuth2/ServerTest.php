@@ -301,7 +301,7 @@ class ServerTest extends TestCase
     {
         $request = TestRequest::createPost(array(
             'grant_type' => 'authorization_code',
-            'client_id' =>'Test Client ID',
+            'client_id' => 'Test Client ID',
             'code' => 'testcode',
         ));
         // verify the mock clientAssertionType was called as expected

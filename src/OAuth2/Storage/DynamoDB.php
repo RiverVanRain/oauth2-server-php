@@ -3,9 +3,9 @@
 namespace OAuth2\Storage;
 
 use Aws\DynamoDb\DynamoDbClient;
-
 use OAuth2\OpenID\Storage\UserClaimsInterface;
 use OAuth2\OpenID\Storage\AuthorizationCodeInterface as OpenIDAuthorizationCodeInterface;
+
 /**
  * DynamoDB storage for all storage types
  *
@@ -52,13 +52,13 @@ class DynamoDB implements
             if (!is_array($connection)) {
                 throw new \InvalidArgumentException('First argument to OAuth2\Storage\Dynamodb must be an instance a configuration array containt key, secret, region');
             }
-            if (!array_key_exists("key",$connection) || !array_key_exists("secret",$connection) || !array_key_exists("region",$connection) ) {
+            if (!array_key_exists("key", $connection) || !array_key_exists("secret", $connection) || !array_key_exists("region", $connection)) {
                 throw new \InvalidArgumentException('First argument to OAuth2\Storage\Dynamodb must be an instance a configuration array containt key, secret, region');
             }
             $this->client = DynamoDbClient::factory(array(
                 'key' => $connection["key"],
                 'secret' => $connection["secret"],
-                'region' =>$connection["region"]
+                'region' => $connection["region"]
             ));
         } else {
             $this->client = $connection;
@@ -80,21 +80,21 @@ class DynamoDB implements
     public function checkClientCredentials($client_id, $client_secret = null)
     {
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['client_table'],
+            "TableName" => $this->config['client_table'],
             "Key" => array('client_id'   => array('S' => $client_id))
         ));
 
-        return  $result->count()==1 && $result["Item"]["client_secret"]["S"] == $client_secret;
+        return  $result->count() == 1 && $result["Item"]["client_secret"]["S"] == $client_secret;
     }
 
     public function isPublicClient($client_id)
     {
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['client_table'],
+            "TableName" => $this->config['client_table'],
             "Key" => array('client_id'   => array('S' => $client_id))
         ));
 
-        if ($result->count()==0) {
+        if ($result->count() == 0) {
             return false ;
         }
 
@@ -105,15 +105,15 @@ class DynamoDB implements
     public function getClientDetails($client_id)
     {
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['client_table'],
+            "TableName" => $this->config['client_table'],
             "Key" => array('client_id'   => array('S' => $client_id))
         ));
-        if ($result->count()==0) {
+        if ($result->count() == 0) {
             return false ;
         }
         $result = $this->dynamo2array($result);
         foreach (array('client_id', 'client_secret', 'redirect_uri', 'grant_types', 'scope', 'user_id') as $key => $val) {
-            if (!array_key_exists ($val, $result)) {
+            if (!array_key_exists($val, $result)) {
                 $result[$val] = null;
             }
         }
@@ -151,14 +151,14 @@ class DynamoDB implements
     public function getAccessToken($access_token)
     {
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['access_token_table'],
+            "TableName" => $this->config['access_token_table'],
             "Key" => array('access_token'   => array('S' => $access_token))
         ));
-        if ($result->count()==0) {
+        if ($result->count() == 0) {
             return false ;
         }
         $token = $this->dynamo2array($result);
-        if (array_key_exists ('expires', $token)) {
+        if (array_key_exists('expires', $token)) {
             $token['expires'] = strtotime($token['expires']);
         }
 
@@ -179,7 +179,6 @@ class DynamoDB implements
         ));
 
         return true;
-
     }
 
     public function unsetAccessToken($access_token)
@@ -197,20 +196,19 @@ class DynamoDB implements
     public function getAuthorizationCode($code)
     {
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['code_table'],
+            "TableName" => $this->config['code_table'],
             "Key" => array('authorization_code'   => array('S' => $code))
         ));
-        if ($result->count()==0) {
+        if ($result->count() == 0) {
             return false ;
         }
         $token = $this->dynamo2array($result);
-        if (!array_key_exists("id_token", $token )) {
+        if (!array_key_exists("id_token", $token)) {
             $token['id_token'] = null;
         }
         $token['expires'] = strtotime($token['expires']);
 
         return $token;
-
     }
 
     public function setAuthorizationCode($authorization_code, $client_id, $user_id, $redirect_uri, $expires, $scope = null, $id_token = null, $code_challenge = null, $code_challenge_method = null)
@@ -289,7 +287,7 @@ class DynamoDB implements
 
         foreach ($claimValues as $value) {
             if ($value == 'email_verified') {
-                $userClaims[$value] = $userDetails[$value]=='true' ? true : false;
+                $userClaims[$value] = $userDetails[$value] == 'true' ? true : false;
             } else {
                 $userClaims[$value] = isset($userDetails[$value]) ? $userDetails[$value] : null;
             }
@@ -302,10 +300,10 @@ class DynamoDB implements
     public function getRefreshToken($refresh_token)
     {
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['refresh_token_table'],
+            "TableName" => $this->config['refresh_token_table'],
             "Key" => array('refresh_token'   => array('S' => $refresh_token))
         ));
-        if ($result->count()==0) {
+        if ($result->count() == 0) {
             return false ;
         }
         $token = $this->dynamo2array($result);
@@ -355,10 +353,10 @@ class DynamoDB implements
     public function getUser($username)
     {
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['user_table'],
+            "TableName" => $this->config['user_table'],
             "Key" => array('username'   => array('S' => $username))
         ));
-        if ($result->count()==0) {
+        if ($result->count() == 0) {
             return false ;
         }
         $token = $this->dynamo2array($result);
@@ -381,7 +379,6 @@ class DynamoDB implements
         ));
 
         return true;
-
     }
 
     /* ScopeInterface */
@@ -438,10 +435,10 @@ class DynamoDB implements
     public function getClientKey($client_id, $subject)
     {
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['jwt_table'],
+            "TableName" => $this->config['jwt_table'],
             "Key" => array('client_id'   => array('S' => $client_id), 'subject' => array('S' => $subject))
         ));
-        if ($result->count()==0) {
+        if ($result->count() == 0) {
             return false ;
         }
         $token = $this->dynamo2array($result);
@@ -477,25 +474,24 @@ class DynamoDB implements
     {
 
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['public_key_table'],
+            "TableName" => $this->config['public_key_table'],
             "Key" => array('client_id'   => array('S' => $client_id))
         ));
-        if ($result->count()==0) {
+        if ($result->count() == 0) {
             return false ;
         }
         $token = $this->dynamo2array($result);
 
         return $token['public_key'];
-
     }
 
     public function getPrivateKey($client_id = '0')
     {
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['public_key_table'],
+            "TableName" => $this->config['public_key_table'],
             "Key" => array('client_id'   => array('S' => $client_id))
         ));
-        if ($result->count()==0) {
+        if ($result->count() == 0) {
             return false ;
         }
         $token = $this->dynamo2array($result);
@@ -506,10 +502,10 @@ class DynamoDB implements
     public function getEncryptionAlgorithm($client_id = null)
     {
         $result = $this->client->getItem(array(
-            "TableName"=> $this->config['public_key_table'],
+            "TableName" => $this->config['public_key_table'],
             "Key" => array('client_id'   => array('S' => $client_id))
         ));
-        if ($result->count()==0) {
+        if ($result->count() == 0) {
             return 'RS256' ;
         }
         $token = $this->dynamo2array($result);

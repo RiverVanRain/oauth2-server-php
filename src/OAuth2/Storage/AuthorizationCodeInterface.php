@@ -46,7 +46,7 @@ interface AuthorizationCodeInterface
      *
      * @ingroup oauth2_section_4
      */
-    public function getAuthorizationCode($code);
+    public function getAuthorizationCode(string $code);
 
     /**
      * Take the provided authorization code values and store them somewhere.
@@ -60,15 +60,15 @@ interface AuthorizationCodeInterface
      * Required for OAuth2::GRANT_TYPE_AUTH_CODE.
      *
      * @param string $code         - Authorization code to be stored.
-     * @param mixed  $client_id    - Client identifier to be stored.
-     * @param mixed  $user_id      - User identifier to be stored.
+     * @param string $client_id    - Client identifier to be stored.
+     * @param int $user_id      - User identifier to be stored.
      * @param string $redirect_uri - Redirect URI(s) to be stored in a space-separated string.
      * @param int    $expires      - Expiration to be stored as a Unix timestamp.
      * @param string $scope        - OPTIONAL Scopes to be stored in space-separated string.
      *
      * @ingroup oauth2_section_4
      */
-    public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = null);
+    public function setAuthorizationCode(string $code, string $client_id, int $user_id = 0, string $redirect_uri, int $expires = 0, string $scope = null);
 
     /**
      * once an Authorization Code is used, it must be expired
@@ -82,5 +82,5 @@ interface AuthorizationCodeInterface
      *    that authorization code
      *
      */
-    public function expireAuthorizationCode($code);
+    public function expireAuthorizationCode(string $code);
 }
